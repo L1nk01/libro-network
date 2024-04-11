@@ -50,16 +50,44 @@
     </nav>
   </header>
 
-  <main>
+  <article id="home-image">
+    <div></div>
 
-  </main>
+    <div>
+      <h1>Bienvenido a nuestra biblioteca virtual</h1>
+      <p class="typewriter">Explora nuestra colección de libros y descubre nuevos autores</p>
+    </div>
+
+    <div>
+      <i class="fa-solid fa-chevron-down"></i>
+    </div>
+  </article>
+  
+  <article id="books-section" class="home-container">
+    <div class="left-column">
+      <h1>Descubre tu próximo libro</h1>
+      <p>Explora nuestra colección de libros y encuentra tus próximas lecturas favoritas. Con la capacidad de buscar libros por género, título o autor, estamos aquí para ayudarte a encontrar exactamente lo que estás buscando. Sumérgete en nuestra amplia selección de obras literarias y déjate llevar por historias fascinantes que te transportarán a mundos increíbles. ¡Bienvenido a una experiencia de lectura emocionante y enriquecedora!</p>
+      <button class="cta-button">Ver Libros</button>
+    </div>
+    <div class="right-column">
+      <img src="./assets/book_section_image.jpg" alt="Book section image" />
+    </div>
+  </article>
+
+  <article id="authors-section">
+    
+  </article>
+
+  <article id="contact-section" class="container">
+
+  </article>
 
   <footer>
     <div id="footer" class="d-flex flex-column align-items-center justify-content-center">
       <div class="d-flex gap-3">
           <a class="social-icon" href="https://www.linkedin.com/in/emmanuel-campos-0b4985232/" target="_blank"><i class="fa-brands fa-linkedin fa-2x footer-icon"></i></a>
           <a class="social-icon" href=""><i class="fa-brands fa-instagram fa-2x footer-icon" target="_blank"></i></a>
-          <a class="social-icon" href=""><i class="fa-brands fa-twitter fa-2x footer-icon" target="_blank"></i></a>
+          <a class="social-icon" href=""><i class="fa-brands fa-x-twitter fa-2x footer-icon" target="_blank"></i></a>
           <a class="social-icon" href="mailto:ecampospaulino@gmail.com"><i class="fa-sharp fa-solid fa-envelope fa-2x footer-icon"></i></a>
       </div>
 

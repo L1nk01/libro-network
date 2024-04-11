@@ -10,12 +10,12 @@
 
       $sql = $conn -> query("INSERT INTO contacto(nombre, apellido, correo, asunto, comentario) values('$name', '$last_name', '$email', '$subject', '$comment')");
       if ($sql == 1) {
-        echo "<div class='alert alert-success'>Mensaje enviado correctamente.</div>";
+        echo "<div class='custom-alert custom-alert-success'>Mensaje enviado correctamente.</div>";
       } else {
-        echo "<div class='alert alert-danger'>El mensaje no se envio correctamente.</div>";
+        echo "<div class='custom-alert custom-alert-danger'>El mensaje no se envio correctamente.</div>";
       }
     } else {
-      echo "<div class='alert alert-warning'>Alguno de los campos está vacío.</div>";
+      echo "<div class='custom-alert custom-alert-warning'>Alguno de los campos está vacío.</div>";
     }
   }
 ?>
