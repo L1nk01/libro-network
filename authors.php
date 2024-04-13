@@ -23,31 +23,8 @@
   <script src="./src/index.js"></script>
 </head>
 <body>
-<header>
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <a class="navbar-brand navbar-size" href="">Libro Network</a>
-
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id=navbarToggler>
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-              <a class="nav-link" href="./index.php">Home</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="./books.php">Nuestros libros</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="./authors.php">Autores</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="./contact.php">Contáctanos</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+  <header>
+    <?php include "./layout/navbar.php" ?>
   </header>
 
   <main>
@@ -57,16 +34,19 @@
     <div class="author-card-container">
       <?php
       include "model/connection.php";
+      include "model/PaginationModel.php";
 
-      if (isset($_GET['page']) && is_numeric($_GET['page'])) {
-        $pagina_actual = $_GET['page'];
-      } else {
-          $pagina_actual = 1;
-      }
+      $paginationModel = new PaginationModel($conn);
 
-      $sql = "SELECT nombre, apellido, ciudad, estado, pais FROM autores ORDER BY nombre asc";
+      $table = "titulos";
+      $itemsPerPage = 4;
+      $currentPage = $paginationModel->get_current_page();
+      $startingIndex = $paginationModel->get_starting_index($currentPage, $itemsPerPage);
+      $sql = "SELECT nombre, apellido, ciudad, estado, pais FROM autores ORDER BY nombre asc LIMIT $startingIndex, $itemsPerPage";
+      $pageCount = $paginationModel->get_page_count($table ,$itemsPerPage);
+      $currentPageItems = $paginationModel->get_current_page_items($sql);
 
-      foreach ($conn->query($sql) as $row) {
+      foreach ($currentPageItems as $row) {
       ?>
         <div class="author-card">
           <div class="author-image-container">
@@ -87,22 +67,35 @@
       }
       ?>
     </div>
+
+    <div class="page-navigator-container">
+      <div class="page-navigator">
+        <?php
+        // Enlace a la página anterior
+        $previousPageNumber = $currentPage - 1;
+        $previousPage = ($currentPage > 1) ? "./authors.php?p=$previousPageNumber" : "./authors.php?p=1";
+        echo "<a class='page-navigator-item page-navigator-prev' href='$previousPage'>Anterior</a>";
+        ?>
+
+        <?php
+        // Enlaces a las páginas
+        for ($i = 1; $i <= $pageCount; $i++) {
+          echo "<a class='page-navigator-item' href='./authors.php?p=$i'>$i</a>";
+        }
+        ?>
+
+        <?php
+        // Enlace a la página siguiente
+        $nextPageNumber = $currentPage + 1;
+        $nextPage = ($currentPage < $pageCount) ? "./authors.php?p=$nextPageNumber" : "./authors.php?p=$pageCount";
+        echo "<a class='page-navigator-item page-navigator-next' href='$nextPage'>Siguiente</a>";
+        ?>
+      </div>
+    </div>
   </main>
 
   <footer>
-    <div id="footer" class="d-flex flex-column align-items-center justify-content-center">
-      <div class="d-flex gap-3">
-          <a class="social-icon" href="https://www.linkedin.com/in/emmanuel-campos-0b4985232/" target="_blank"><i class="fa-brands fa-linkedin fa-2x footer-icon"></i></a>
-          <a class="social-icon" href=""><i class="fa-brands fa-instagram fa-2x footer-icon" target="_blank"></i></a>
-          <a class="social-icon" href=""><i class="fa-brands fa-x-twitter fa-2x footer-icon" target="_blank"></i></a>
-          <a class="social-icon" href="mailto:ecampospaulino@gmail.com"><i class="fa-sharp fa-solid fa-envelope fa-2x footer-icon"></i></a>
-      </div>
-
-      <div class="text-center mt-4">
-          <p class="text-white mb-0">ITLA | Desarrollo de Software</p>
-          <p class="text-white mb-0">© Emmanuel Campos - Derechos Reservados | Santo Domingo, 2024</p>
-      </div>
-    </div>
+    <?php include "./layout/footer.php" ?>
   </footer>
 </body>
 </html>

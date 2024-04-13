@@ -22,60 +22,36 @@
   <!-- Scripts -->
   <script src="./src/index.js"></script>
 </head>
+
 <body>
   <header>
-    <nav class="navbar navbar-expand-lg navbar-dark">
-      <a class="navbar-brand navbar-size" href="">Libro Network</a>
-
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-
-      <div class="collapse navbar-collapse" id=navbarToggler>
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item">
-              <a class="nav-link" href="./index.php">Home</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="./books.php">Nuestros libros</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="./authors.php">Autores</a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="./contact.php">Contáctanos</a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+    <?php include "./layout/navbar.php" ?>
   </header>
 
   <main>
     <h1 class="title">Explora Nuestra Colección</h1>
     <p class="subtitle">Descubre libros fascinantes que te llevarán a mundos inexplorados.</p>
 
+    <?php
+    include "model/connection.php";
+    include "model/PaginationModel.php";
+
+    $paginationModel = new PaginationModel($conn);
+
+    $table = "titulos";
+    $itemsPerPage = 4;
+    $currentPage = $paginationModel->get_current_page();
+    $startingIndex = $paginationModel->get_starting_index($currentPage, $itemsPerPage);
+    $sql = "SELECT titulo, tipo, precio, notas, fecha_pub FROM titulos ORDER BY titulo ASC LIMIT $startingIndex, $itemsPerPage;";
+    $pageCount = $paginationModel->get_page_count($table ,$itemsPerPage);
+    $currentPageItems = $paginationModel->get_current_page_items($sql);
+    ?>
+
     <div class="book-card-container">
-      <?php
-      include "model/connection.php";
-
-      if (isset($_GET['p']) && is_numeric($_GET['p'])) {
-        $currentPage = $_GET['p'];
-      } else {
-        $currentPage = 1;
-      }
-
-      // Gets the items for the current page
-      $sqlStartingIndex = ($currentPage == 1) ? 0 : ($currentPage * 4) - 4;
-      $sql = "SELECT titulo, tipo, precio, notas, fecha_pub FROM titulos ORDER BY titulo asc LIMIT $sqlStartingIndex, 4;";
-
-      // Gets the quantity of items the page navigation bar will need
-      $rowCount = $conn->query("SELECT COUNT(*) AS total_records FROM titulos;")->fetch_assoc()['total_records'];
-      $itemsPerPage = 4;
-      $pageCount = ceil($rowCount / $itemsPerPage);
-
-      foreach ($conn->query($sql) as $row) {
-        $fecha_pub_formateada = strftime("%d de %B de %Y", strtotime($row['fecha_pub']));
-      ?>
+      <?php foreach ($currentPageItems as $row): ?>
+        <?php
+          $fecha_pub_formateada = strftime("%d de %B de %Y", strtotime($row['fecha_pub']));
+        ?>
         <div class="book-card">
           <div class="book-card-image-container">
             <img class="book-card-image" src="./assets/book_placeholder.png" alt="Book picture" />
@@ -85,7 +61,7 @@
             <div class="book-details">
               <div>
                 <h2 class="book-card-title"><?php echo $row['titulo']; ?></h2>
-                <p class="book-card-text"><?php echo $row['notas']; ?></p>'
+                <p class="book-card-text"><?php echo $row['notas']; ?></p>
               </div>
               <div>
                 <p class="book-card-text"><strong>Género:</strong> <?php echo $row['tipo']; ?></p>
@@ -98,30 +74,38 @@
             </div>
           </div>
         </div>
-      <?php
-      }
+      <?php endforeach; ?>
+    </div>
 
-      for ($i = 1; $i <= $pageCount; $i++) {
-        echo "<a href='./books.php?p=$i'>Pagina $i</a>";
-      }
-      ?>
+    <div class="page-navigator-container">
+      <div class="page-navigator">
+        <?php
+        // Enlace a la página anterior
+        $previousPageNumber = $currentPage - 1;
+        $previousPage = ($currentPage > 1) ? "./books.php?p=$previousPageNumber" : "./books.php?p=1";
+        echo "<a class='page-navigator-item page-navigator-prev' href='$previousPage'>Anterior</a>";
+        ?>
+
+        <?php
+        // Enlaces a las páginas
+        for ($i = 1; $i <= $pageCount; $i++) {
+          echo "<a class='page-navigator-item' href='./books.php?p=$i'>$i</a>";
+        }
+        ?>
+
+        <?php
+        // Enlace a la página siguiente
+        $nextPageNumber = $currentPage + 1;
+        $nextPage = ($currentPage < $pageCount) ? "./books.php?p=$nextPageNumber" : "./books.php?p=$pageCount";
+        echo "<a class='page-navigator-item page-navigator-next' href='$nextPage'>Siguiente</a>";
+        ?>
+      </div>
     </div>
   </main>
 
   <footer>
-    <div id="footer" class="d-flex flex-column align-items-center justify-content-center">
-        <div class="d-flex gap-3">
-            <a class="social-icon" href="https://www.linkedin.com/in/emmanuel-campos-0b4985232/" target="_blank"><i class="fa-brands fa-linkedin fa-2x footer-icon"></i></a>
-            <a class="social-icon" href=""><i class="fa-brands fa-instagram fa-2x footer-icon" target="_blank"></i></a>
-            <a class="social-icon" href=""><i class="fa-brands fa-x-twitter fa-2x footer-icon" target="_blank"></i></a>
-            <a class="social-icon" href="mailto:ecampospaulino@gmail.com"><i class="fa-sharp fa-solid fa-envelope fa-2x footer-icon"></i></a>
-        </div>
-
-        <div class="text-center mt-4">
-            <p class="text-white mb-0">ITLA | Desarrollo de Software</p>
-            <p class="text-white mb-0">© Emmanuel Campos - Derechos Reservados | Santo Domingo, 2024</p>
-        </div>
-    </div>
+    <?php include "./layout/footer.php" ?>
   </footer>
 </body>
+
 </html>

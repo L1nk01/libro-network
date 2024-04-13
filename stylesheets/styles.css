@@ -55,14 +55,14 @@ li {
 }
 
 .title {
-  padding-top: 100px;
+  padding-top: 70px;
   margin: 0;
-  margin-bottom: 25px;
+  margin-bottom: 10px;
 }
 
 .subtitle {
   font-size: 1.5rem;
-  padding-bottom: 100px;
+  padding-bottom: 70px;
   margin: 0;
 }
 
@@ -159,6 +159,62 @@ li {
 .nav-link:hover {
   color: rgb(49, 213, 219) !important;
 }
+
+/* Page navigator */
+.page-navigator-container {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px 0 40px;
+}
+
+.page-navigator {
+  display: flex;
+  flex-direction: row;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
+}
+
+.page-navigator-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Ubuntu', sans-serif !important;
+  min-width: 60px;
+  height: 45px;
+  text-decoration: none;
+  margin: 0;
+  padding: 10px 20px;
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  color: rgba(255, 255, 255, 0.9) !important;
+  font-size: 17px;
+  letter-spacing: 2px;
+  cursor: pointer;
+  text-transform: uppercase;
+}
+
+.page-navigator-prev {
+  padding: 20px;
+  border-radius: 6px 0 0 6px;
+}
+
+.page-navigator-next {
+  padding: 20px;
+  border-radius: 0 6px 6px 0;
+}
+
+.page-navigator-item:visited {
+  text-decoration: none;
+  color: inherit;
+}
+
+.page-navigator-item:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
 
 /* Home */
 #home-image {
@@ -275,7 +331,7 @@ li {
 }
 
 #contact-section {
-  padding: 100px 0;
+  padding: 10*0px 0;
   display: flex;
   flex-direction: row;
 }
@@ -305,7 +361,7 @@ li {
   display: flex;
   flex-direction: column;
   gap: 15px;
-  margin: 0 0 50px 0;
+  margin: 0;
 }
 
 /* Book card */
