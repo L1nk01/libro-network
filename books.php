@@ -58,13 +58,20 @@
       <?php
       include "model/connection.php";
 
-      if (isset($_GET['page']) && is_numeric($_GET['page'])) {
-        $pagina_actual = $_GET['page'];
+      if (isset($_GET['p']) && is_numeric($_GET['p'])) {
+        $currentPage = $_GET['p'];
       } else {
-          $pagina_actual = 1;
+        $currentPage = 1;
       }
 
-      $sql = "SELECT titulo, tipo, precio, notas, fecha_pub FROM titulos ORDER BY titulo asc";
+      // Gets the items for the current page
+      $sqlStartingIndex = ($currentPage == 1) ? 0 : ($currentPage * 4) - 4;
+      $sql = "SELECT titulo, tipo, precio, notas, fecha_pub FROM titulos ORDER BY titulo asc LIMIT $sqlStartingIndex, 4;";
+
+      // Gets the quantity of items the page navigation bar will need
+      $rowCount = $conn->query("SELECT COUNT(*) AS total_records FROM titulos;")->fetch_assoc()['total_records'];
+      $itemsPerPage = 4;
+      $pageCount = ceil($rowCount / $itemsPerPage);
 
       foreach ($conn->query($sql) as $row) {
         $fecha_pub_formateada = strftime("%d de %B de %Y", strtotime($row['fecha_pub']));
@@ -92,6 +99,10 @@
           </div>
         </div>
       <?php
+      }
+
+      for ($i = 1; $i <= $pageCount; $i++) {
+        echo "<a href='./books.php?p=$i'>Pagina $i</a>";
       }
       ?>
     </div>

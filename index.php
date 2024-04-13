@@ -67,19 +67,33 @@
     <div class="left-column">
       <h1>Descubre tu próximo libro</h1>
       <p>Explora nuestra colección de libros y encuentra tus próximas lecturas favoritas. Con la capacidad de buscar libros por género, título o autor, estamos aquí para ayudarte a encontrar exactamente lo que estás buscando. Sumérgete en nuestra amplia selección de obras literarias y déjate llevar por historias fascinantes que te transportarán a mundos increíbles. ¡Bienvenido a una experiencia de lectura emocionante y enriquecedora!</p>
-      <button class="cta-button">Ver Libros</button>
+      <a href="./books.php"><button class="cta-button">Ver Libros</button></a>
+    </div>/
+    <div class="right-column">
+      <img class="img-right-border" src="./assets/book_section_image.jpg" alt="Book section image" />
+    </div>
+  </article>
+
+  <article id="authors-section" class="home-container">
+    <div class="left-column-reverse">
+      <h1>Explora el mundo de los autores</h1>
+      <p>Sumérgete en el fascinante mundo de los autores y descubre las mentes creativas detrás de tus libros favoritos. En esta sección, encontrarás información sobre autores famosos, sus obras más destacadas y su impacto en la literatura. Desde clásicos atemporales hasta autores contemporáneos, te invitamos a explorar la diversidad y la riqueza de la escritura a través de las palabras de estos talentosos individuos.</p>
+      <a href="./authors.php"><button class="cta-button">Ver Autores</button></a>
+    </div>
+    <div class="right-column-reverse">
+      <img class="img-left-border" src="./assets/author_section_image.jpg" alt="Author section image" />
+    </div>
+  </article>
+
+  <article id="contact-section" class="home-container">
+    <div class="left-column">
+      <h1>¡Conéctate con nosotros!</h1>
+      <p>Estamos aquí para escucharte. Si tienes alguna pregunta, comentario o sugerencia, no dudes en ponerte en contacto con nuestro equipo. Valoramos tus opiniones y nos comprometemos a proporcionarte la mejor experiencia posible. Completa el formulario a continuación y nos pondremos en contacto contigo lo antes posible.</p>
+      <a href="./contact.php"><button class="cta-button">Contáctanos</button></a>
     </div>
     <div class="right-column">
-      <img src="./assets/book_section_image.jpg" alt="Book section image" />
+      <img class="img-right-border" src="./assets/contact_section_image.jpg" alt="Book section image" />
     </div>
-  </article>
-
-  <article id="authors-section">
-    
-  </article>
-
-  <article id="contact-section" class="container">
-
   </article>
 
   <footer>
