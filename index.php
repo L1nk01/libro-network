@@ -45,7 +45,7 @@
       <h1>Descubre tu próximo libro</h1>
       <p>Explora nuestra colección de libros y encuentra tus próximas lecturas favoritas. Con la capacidad de buscar libros por género, título o autor, estamos aquí para ayudarte a encontrar exactamente lo que estás buscando. Sumérgete en nuestra amplia selección de obras literarias y déjate llevar por historias fascinantes que te transportarán a mundos increíbles. ¡Bienvenido a una experiencia de lectura emocionante y enriquecedora!</p>
       <a href="./books.php"><button class="cta-button">Ver Libros</button></a>
-    </div>/
+    </div>
     <div class="right-column">
       <img class="img-right-border" src="./assets/book_section_image.jpg" alt="Book section image" />
     </div>
@@ -74,7 +74,7 @@
   </article>
 
   <footer>
-    <?php include "./layout/header.php" ?>
+    <?php include "layout/footer.php" ?>
   </footer>
 </body>
 </html>
